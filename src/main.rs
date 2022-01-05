@@ -1,26 +1,17 @@
-struct Member {
-    username: String,
-    email: String,
-    age: u64,
-    active: bool,
+struct hinhChuNhat {
+    dai: u32, 
+    rong: u32,
 }
 
 fn main() {
-    let mut member1 = Member {
-        email: String::from("anhtuan@gmail.com"),
-        username: String::from("anhtuan"),
-        age: 28,
-        active: true,
+    let kichThuoc = hinhChuNhat {
+        dai: 50,
+        rong: 30,
     };
 
-    let member2 = create_new_member(String::from("DaoAnhTuan"), String::from("anhtuanpcipho2@gmail.com"), 30);
+    println!("dien tich hinh chu nhat la {}", dien_tich(&kichThuoc))
 }
 
-fn create_new_member (username: String, email: String, age: u64) -> Member {
-    Member {
-        email: email,
-        username: username,
-        age: age,
-        active: true,
-    }
+fn dien_tich(kich_thuoc: &hinhChuNhat) -> u32 {
+    kich_thuoc.dai * kich_thuoc.rong
 }
