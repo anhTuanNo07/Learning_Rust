@@ -1,0 +1,135 @@
+fn main() {
+    let mut x: i32 = 10;
+    println!("x = {}", x);
+
+    x = 20;
+    println!("x =  {}", x);
+
+    const HANG_SO: u128 = 1000_000_000_000;
+    println!("HANG_SO = {}", HANG_SO)
+}
+
+fn main() {
+    // Shadowing
+    let x: i32 = 10;
+    println!("x = {}", x);
+    let x: &str = "ten";
+    println!("x = {}", x);
+}
+
+fn main() {
+    let a: i32 = 111_111; // Decimals
+    let b: i32 = 0xff; // Hex
+    let c: i32 = 0o77; //Octal
+    let d: i32 = 0b1111_0000; // Binary
+    let e: u8 = b'A'; // Byte
+    println!("a = {}", a);
+    println!("b = {}", b);
+    println!("c = {}", c);
+    println!("c = {}", d);
+    println!("e = {}", e);
+
+}
+
+fn main() {
+    let f: f64 = 2.0;
+    let g: f32 = 3.0;
+
+    let sum: i32 = 3 + 4;
+    let subtraction: i32 = 5 - 4;
+    let multiplication: i32 = 3 * 5;
+    let division: f64 = 40.4 / 20.4;
+    let remainder: i32 = 43 % 4;
+    println!("sum = {}", sum);
+    println!("subtraction = {}", subtraction);
+    println!("multiplication = {}", multiplication);
+    println!("division = {}", division);
+    println!("remainder = {}", remainder);
+}
+
+fn main() {
+    let tup: (&str, i32) = ("hello", 10000);
+    println!("{:?}", tup);
+    // let (_string: &str, _integer: i32) =  tup;
+    let _integer: i32 = tup.1;
+    println!("{}",  _integer);
+}
+
+fn main() {
+    let number = [100, 200, 300];
+    let get_number = number[1];
+
+    println!("number = {}", get_number);
+}
+
+// Owner
+
+// Error
+fn main() {
+    let _s1 = String::from("Hello");
+    let _s2 = _s1;
+    println!("{}", _s1);
+}
+
+// fix 
+fn main() {
+    let _s1 = String::from("Hello world!");
+    let _s2 = _s1.clone();
+    println!("{}", _s1);
+}
+
+// Similarity
+fn main() {
+    let s = String::from("Hello world!");
+    take_ownership(s);
+    println!("{}", s);
+}
+
+fn take_ownership(_string: String) {
+    println!("{}", _string);
+}
+
+// solution 
+fn main() {
+    let s1 = give_ownership();
+    let s2 = String::from("Hello World!");
+    let s3 = takes_and_gives_back(s2);
+    println!("{}, {}", s1, s3);
+}
+
+fn give_ownership() -> String {
+    let some_string = String::from("Hello World!");
+    some_string
+}
+
+fn takes_and_gives_back(some_string: String) -> String {
+    some_string
+}
+
+
+// Assign and return value to function
+fn main() {
+    let s1 = String::from("Hello");
+    let (s2, len) = calculate_length(s1);
+    println!("Do dai cua {} la {}", s2, len);
+}
+
+fn calculate_length(some_string: String) -> (String, usize) {
+    let length = some_string.len();
+    (some_string, length)
+}
+
+// Using reference
+fn main() {
+    let mut s1 = String::from("Hello");
+    let len = calculate_length(&mut s1);
+    println!("Do dai cua {} la {}", s1, len);
+}
+
+fn calculate_length(some_string: &mut String) -> usize {
+    some_string.push_str(" world!");
+    let length = some_string.len();
+    length
+}
+
+// Struct
