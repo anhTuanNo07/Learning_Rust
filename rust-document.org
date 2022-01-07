@@ -213,3 +213,441 @@ fn main() {
 fn dien_tich(kich_thuoc: &hinhChuNhat) -> u32 {
     kich_thuoc.dai * kich_thuoc.rong
 }
+
+// implement struct 
+struct hinhChuNhat {
+    dai: u32, 
+    rong: u32,
+}
+
+impl hinhChuNhat {
+    fn dien_tich(&self) -> u32 {
+        self.dai * self.rong
+    }
+
+    fn chua(&self, hinhChuNhatKhac: &hinhChuNhat) -> bool {
+        self.dai > hinhChuNhatKhac.dai && self.rong > hinhChuNhatKhac.rong
+    }
+}
+fn main() {
+    let kichThuoc = hinhChuNhat {
+        dai: 50,
+        rong: 30,
+    };
+
+    let kichThuoc2 = hinhChuNhat {
+        dai: 40,
+        rong: 20,
+    };
+
+    println!("dien tich hinh chu nhat la {}", kichThuoc.dien_tich());
+
+    println!("hinh chu nhat co the chua hinh 2: {}", kichThuoc.chua(&kichThuoc2))
+}
+
+// --- Bai hoc so 4: Cach su dung Enum, Option Enum & Match ---
+
+// sample code
+#[derive(Debug)]
+
+enum IpAddressKind {
+    V4(u8, u8, u8, u8), 
+    V6(String),
+}
+
+#[derive(Debug)]
+struct _IpAddress {
+    kind: IpAddressKind
+    ,address: String,
+}
+fn main() {
+    let localhost = IpAddressKind::V4(127, 0, 0, 1);
+
+    println!("localhost = {:#?}", localhost)
+}
+
+fn route(ip_kind: IpAddressKind) {}
+
+// Option Enum
+fn main() {
+    let x = 5;
+    let y = Some(5);
+    let z: Option<i32> = None;
+
+    let sum  = x + y.unwrap_or(0);
+    let sum2 = x + z.unwrap_or(1);
+    println!("sum = {}", sum);
+    println!("sum2 = {}", sum2);
+
+}
+
+// Match Option
+// sample code 
+fn main() {
+    decimals(Coin::Bitcoin(Balance::Shark));
+}
+
+#[derive(Debug)]
+enum Balance {
+    Small, 
+    Intermediate,
+    Fish, 
+    Shark,
+}
+enum Coin {
+    Solana,
+    Ethereum,
+    Near,
+    Bitcoin(Balance),
+}
+
+fn decimals(coin: Coin) -> u8 {
+    match coin {
+        Coin::Solana => {
+            println!("Solana Match");
+            1
+        },
+        Coin::Ethereum => 10,
+        Coin::Near => 20,
+        Coin::Bitcoin(bala) => {
+            println!("I am a {:#?}", bala);
+            30
+        },
+    }
+}
+
+// sample code 2
+fn main() {
+    let five = Some(5);
+    let six = plus_one(five);
+
+    println!("six = {:#?}", six);
+
+    let none = plus_one(None);
+    println!("none = {:#?}", none)
+}
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        Some(x) => Some(x + 1),
+        _ => None,
+    }
+}
+
+// if let some 
+fn main() {
+    let _value = Some(4);
+    match _value {
+        Some(5) => println!("bang 5"),
+        _ => println!("khac 5"),
+    }
+}
+
+// --- Bai hoc so 5: Quan ly du an va cach su dung Packages, Crates, Modules ---
+
+cargo new --bin name: Tao package folder ten name
+
+web crates.io: tong hop cac crates
+
+So luoc trong file Cargo.toml:
+- [package]: bao gom cac thong so nhu:
++ name: Ten package
++ version: phien ban. VD "0.1.0"
++ edition: nam phat hanh VD "2021"
+
+- [dependencies]: Luu tru cac dependencies: Chi can viet ten cac package kem voi version, se duoc tu dong cai cac dependencies can thiet
+
+file Cargo.lock: luu tru cac thong tin co dinh cho package, VD: name, version, source (github), va checksum (ma hash)
+
+cargo new --lib libfiles: Tao mot library, khong co file main, nhung lai co file lib.rs, dung de su dung cho nhieu truong hop khac.
+
+// sample moduole
+mod front_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+        pub fn seat_at_table() {}
+    }
+
+    pub mod serving {
+        pub fn take_order() {}
+        pub fn take_payment() {}
+    }
+}
+
+fn call_order() {}
+
+mod test{
+    mod back_house {
+        fn cook_order() {}
+        fn fix_order() {
+            super::super::call_order();
+            cook_order();
+        }
+    }
+}
+
+fn eat_at_restaurent() {
+    crate::front_house::hosting::add_to_waitlist();
+}
+
+// sample 2
+
+
+use fmt::io;
+use rand::Rng;
+user rand::RngCore;
+user rand::SeedableRng;
+mod back_house {
+    pub struct Breakfast {
+        toast: String,
+        fruit: String.
+    }
+
+    pub enum Salad {
+        Soup, 
+        Salad,
+    }
+
+    impl Breakfast {
+        fn monday(toast: &str) -> Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                fruilt: String::from("banana")
+            }
+        }
+    }
+}
+
+mod front_house {
+    pub mod hosting  {
+        fn add_to_waiting() {}
+    }
+}
+
+fn eat_an_reataurant() {
+    let mut order = back_house::Breakfast::momday("Fish")
+    order.toast = String::From("Chicken")
+
+    let order = back_house::Breakfast {
+        toast: String::from("Wheat"),
+        fruit: String::From("Apple"),
+    }
+
+    let order2 = back_house::Salad::Salad
+}
+
+// --- Bai hoc so 6: Su dung Vector, String và HashMap ---
+Day chinh la nhung kieu du lieu duoc luu trong vung nho Heap, noi co the phong to thu nho memory
+// Vectors
+fn main() {
+    // Vectors
+    let a = [1, 2, 3];
+    let v  = vec![1, 2, 3];
+    let mut v2 = Vec::new();
+    v2.push(1);
+    v2.push(2);
+    v2.push(3);
+    v2.push(4);
+    println!("{:?}", v2)
+}
+
+// Match va Vector
+fn main() {
+    // Vectors
+    let a = [1, 2, 3];
+    let v  = vec![1, 2, 3, 4, 5, 6];
+    let mut v2 = Vec::new();
+    v2.push(1);
+    v2.push(2);
+    v2.push(3);
+    v2.push(4);
+    println!("{:?}", v2);
+
+    let five = &v[5];
+    match v.get(5) {
+        Some(five) => println!("This is five element = {}", five),
+        None => println!("This is not a four element")
+    }
+}
+
+// Su dung enum voi Vector
+
+fn main() {
+    // Vectors
+    enum SheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String)
+    }
+
+    let row =  vec![
+        SheetCell::Int(5),
+        SheetCell::Float(10.12),
+        SheetCell::Text(String::from("Blue")),
+    ];
+
+    match &row[1] {
+        &SheetCell::Float(i) => println!("{}", i),
+        _ => println!("This is not a float"),
+    }
+}
+
+// String
+fn main() {
+    // String 
+    // UTF-8
+    let s1 = String::from("A String");
+    // empty string
+    let s2 = String::new();
+    // string of character
+    let s3 = "A String";
+    // convert &str to String
+    let s4 = s3.to_string();
+}
+// sample code 2 for string
+fn main() {
+    // String 
+    // UTF-8
+    let s1 = String::from("A String");
+    // empty string
+    let s2 = String::from("Toi ten la Dao Anh Tuan");
+    let s3 = String::from("ダオ　アン　ツア");
+    // convert &str to String
+    let s4 = String::from("***");
+
+    let s5 = s2 + " in japanese is " + &s3;
+    println!("{}", s5);
+
+    println!("{}", s3);
+}
+
+// work with &str
+
+use unicode_segmentation::UnicodeSegmentation;
+fn main() {
+    //String 
+    // UTF-8
+    let s3 = String::from("アン　ツアン");
+    // Bytes
+    for i in s3.bytes() {
+        println!("{}", i)
+    }
+
+    // Scalar values
+    for i in s3.chars() {
+        println!("{}", i)
+    }
+
+    // Grapheme Clusters
+    for i in s3.graphemes(true) {
+        println!("{}", i)
+    }
+
+}
+
+// HashMap
+use std::collections::HashMap;
+fn main() {
+    // hashmap
+    let mu = String::from("MU");
+    let mc = String::from("MC");
+
+    let mut scores = HashMap::new();
+
+    scores.insert(mu, 10);
+    scores.insert(mc, 9);
+
+    let team_name = String::from("MU");
+    let score = scores.get(&team_name);
+
+    for (key, value) in &scores {
+        println!("{} {}", key, value)
+    }
+
+    println!("score = {:?}", score)
+}
+
+// HashMap
+use std::collections::HashMap;
+fn main() {
+    let text = "hello world this is wonderful world";
+
+    let mut map = HashMap::new();
+    for i in text.split_whitespace() {
+        let count = map.entry(i).or_insert(0);
+        *count += 1;
+    }
+    println!("{:?}", map)
+}
+
+// Qua trinh map tren kha giong voi mapping trong solidity 
+
+// --- Bai hoc so 7: Generic ---
+Tuong doi giong voi generic trong Typescript
+
+// Bai hoc so 8: Traits in Rust ---
+// Note: Tuogn doi giong voi Trait in PHP
+
+
+// sample code
+struct Data {
+    num1: i32,
+    num2: i32,
+    str1: String,
+    optional: Option<i32>,
+}
+
+struct Data2 {
+    num1: i32,
+    num2: i32,
+    str1: String,
+    optional: Option<i32>,
+}
+
+impl Data {
+    fn new() -> Self{
+        Data {
+            num1: 15,
+            num2: 25, 
+            str1: "some string 2".to_string(),
+            optional: None,
+        }
+    }
+}
+
+trait Transform {
+    fn revert(&self) -> String {
+        String::from("No string...")
+    }
+}
+
+impl Transform for Data {
+    fn revert(&self) -> String {
+        self.str1.chars().rev().collect::<String>()
+    }
+}
+
+impl Transform for Data2 {
+    fn revert(&self) -> String {
+        (self.num1 + self.num2).to_string()
+    }
+}
+
+fn main() {
+    let a = Data::new();
+
+    let b = Data2 {
+        num1: 10,
+        num2: 20,
+        str1: String::from("ok string"),
+        optional: None,
+    };
+    
+    println!("{}", a.revert());
+}
+
+// --- Bai hoc so 9: Life Time ---
+Xem video de ro hon chi thiet
+
+// --- Bai hoc so 10: Error handle & Result ---
+
